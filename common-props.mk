@@ -163,6 +163,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.gatekeeper.disable_spu=true
 
+# GPS
+	BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default
+	GNSS_HIDL_VERSION := 2.0
+	USE_DEVICE_SPECIFIC_GPS := true
+
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.egl.hw=0 \
@@ -260,8 +265,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # SSR
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.vendor.ssr.restart_level=ALL_ENABLE
-
+    persist.vendor.ssr.restart_level=ALL_ENABLE	
+	
 # SurfaceFlinger
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.enable_gl_backpressure=1 \
