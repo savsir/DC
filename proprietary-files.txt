@@ -544,7 +544,6 @@ vendor/lib/libarbitrarybytes.so
 vendor/lib/libOmxSwVdec.so
 vendor/lib/libOmxSwVencMpeg4.so
 -vendor/lib/libplatformconfig.so
-vendor/lib/libstagefrighthw.so
 -vendor/lib64/libplatformconfig.so
 
 # Neural-networks
