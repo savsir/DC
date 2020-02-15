@@ -180,6 +180,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.egl=adreno \
     ro.hardware.vulkan=adreno \
     vendor.gralloc.disable_ubwc=0
+	ro.surface_flinger.has_HDR_display=true \
+    ro.surface_flinger.has_wide_color_display=true \
 
 # IMS
 PRODUCT_PROPERTY_OVERRIDES += \
