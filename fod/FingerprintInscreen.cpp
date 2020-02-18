@@ -23,7 +23,8 @@
 #include <cmath>
 
 #define COMMAND_NIT 10
-#define PARAM_NIT_FOD 1
+#define PARAM_NIT_630_FOD 1
+#define PARAM_NIT_300_FOD 4
 #define PARAM_NIT_NONE 0
 
 #define FOD_HBM_PATH "/sys/devices/platform/soc/soc:qcom,dsi-display-primary/fod_hbm"
@@ -67,6 +68,7 @@ namespace V1_0 {
 namespace implementation {
 
 FingerprintInscreen::FingerprintInscreen() {
+    this->mFodCircleVisible = false;
     xiaomiFingerprintService = IXiaomiFingerprint::getService();
 }
 
@@ -92,7 +94,13 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
 
 Return<void> FingerprintInscreen::onPress() {
     set(FOD_HBM_PATH, FOD_HBM_ON);
-    xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_FOD);
+
+    if (get(BRIGHTNESS_PATH, 0) > 100) {
+        xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_300_FOD);
+    } else if (get(BRIGHTNESS_PATH, 0) != 0) {
+        xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_630_FOD);
+    }
+
     return Void();
 }
 
@@ -104,11 +112,15 @@ Return<void> FingerprintInscreen::onRelease() {
 
 Return<void> FingerprintInscreen::onShowFODView() {
     set(FOD_STATUS_PATH, FOD_STATUS_ON);
+    this->mFodCircleVisible = true;
     return Void();
 }
 
 Return<void> FingerprintInscreen::onHideFODView() {
     set(FOD_STATUS_PATH, FOD_STATUS_OFF);
+	set(FOD_HBM_PATH, FOD_HBM_OFF);
+    xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
+    this->mFodCircleVisible = false;
     return Void();
 }
 
@@ -126,7 +138,7 @@ Return<void> FingerprintInscreen::setLongPressEnabled(bool) {
     return Void();
 }
 
-Return<int32_t> FingerprintInscreen::getDimAmount(int32_t /* brightness */) {
+Return<int32_t> FingerprintInscreen::getDimAmount(int32_t brightness) {
     int realBrightness = get(BRIGHTNESS_PATH, 0);
     float alpha;
 
@@ -136,6 +148,8 @@ Return<int32_t> FingerprintInscreen::getDimAmount(int32_t /* brightness */) {
         alpha = 1.0 - pow(realBrightness / 1680.0, 0.455);
     }
 
+    (void) brightness;
+
     return 255 * alpha;
 }
 
@@ -143,7 +157,8 @@ Return<bool> FingerprintInscreen::shouldBoostBrightness() {
     return false;
 }
 
-Return<void> FingerprintInscreen::setCallback(const sp<IFingerprintInscreenCallback>& /* callback */) {
+Return<void> FingerprintInscreen::setCallback(const sp<::vendor::lineage::biometrics::fingerprint::inscreen::V1_0::IFingerprintInscreenCallback>& callback) {
+    (void) callback;
     return Void();
 }
 
