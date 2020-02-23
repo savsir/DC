@@ -29,7 +29,7 @@
 #define BRIGHTNESS      "brightness"
 
 #define MAX_LED_BRIGHTNESS    255
-#define MAX_LCD_BRIGHTNESS    2047
+#define MAX_LCD_BRIGHTNESS    4095
 
 namespace {
 /*
@@ -62,11 +62,13 @@ static uint32_t getBrightness(const LightState& state) {
     blue = state.color & 0xFF;
 
     /*
-     * Scale RGB brightness using Alpha brightness.
+     * Scale RGB brightness if Alpha brightness is not 0xFF.
      */
-    red = red * alpha / 0xFF;
-    green = green * alpha / 0xFF;
-    blue = blue * alpha / 0xFF;
+    if (alpha != 0xFF) {
+        red = red * alpha / 0xFF;
+        green = green * alpha / 0xFF;
+        blue = blue * alpha / 0xFF;
+    }
 
     return (77 * red + 150 * green + 29 * blue) >> 8;
 }
@@ -93,11 +95,6 @@ static void handleNotification(const LightState& state) {
 
     /* Disable breathing or blinking */
     set(WHITE_LED BREATH, 0);
-    set(WHITE_LED BRIGHTNESS, 0);
-
-    if (!whiteBrightness) {
-        return;
-    }
 
     switch (state.flashMode) {
         case Flash::HARDWARE:
@@ -111,19 +108,8 @@ static void handleNotification(const LightState& state) {
     }
 }
 
-static inline bool isStateLit(const LightState& state) {
+static inline bool isLit(const LightState& state) {
     return state.color & 0x00ffffff;
-}
-
-static inline bool isStateEqual(const LightState& first, const LightState& second) {
-    if (first.color == second.color && first.flashMode == second.flashMode &&
-            first.flashOnMs == second.flashOnMs &&
-            first.flashOffMs == second.flashOffMs &&
-            first.brightnessMode == second.brightnessMode) {
-        return true;
-    }
-
-    return false;
 }
 
 /* Keep sorted in the order of importance. */
@@ -134,40 +120,6 @@ static std::vector<LightBackend> backends = {
     { Type::BACKLIGHT, handleBacklight },
 };
 
-static LightStateHandler findHandler(Type type) {
-    for (const LightBackend& backend : backends) {
-        if (backend.type == type) {
-            return backend.handler;
-        }
-    }
-
-    return nullptr;
-}
-
-static LightState findLitState(LightStateHandler handler) {
-    LightState emptyState;
-
-    for (const LightBackend& backend : backends) {
-        if (backend.handler == handler) {
-            if (isStateLit(backend.state)) {
-                return backend.state;
-            }
-
-            emptyState = backend.state;
-        }
-    }
-
-    return emptyState;
-}
-
-static void updateState(Type type, const LightState& state) {
-    for (LightBackend& backend : backends) {
-        if (backend.type == type) {
-            backend.state = state;
-        }
-    }
-}
-
 }  // anonymous namespace
 
 namespace android {
@@ -177,29 +129,34 @@ namespace V2_0 {
 namespace implementation {
 
 Return<Status> Light::setLight(Type type, const LightState& state) {
+    LightStateHandler handler = nullptr;
+
     /* Lock global mutex until light state is updated. */
     std::lock_guard<std::mutex> lock(globalLock);
 
-    LightStateHandler handler = findHandler(type);
+    /* Update the cached state value for the current type. */
+    for (LightBackend& backend : backends) {
+        if (backend.type == type) {
+            backend.state = state;
+            handler = backend.handler;
+        }
+    }
+
+    /* If no handler has been found, then the type is not supported. */
     if (!handler) {
-        /* If no handler has been found, then the type is not supported. */
         return Status::LIGHT_NOT_SUPPORTED;
     }
 
-    /* Find the old state of the current handler. */
-    LightState oldState = findLitState(handler);
-
-    /* Update the cached state value for the current type. */
-    updateState(type, state);
-
-    /* Find the new state of the current handler. */
-    LightState newState = findLitState(handler);
-
-    if (isStateEqual(oldState, newState)) {
-        return Status::SUCCESS;
+    /* Light up the type with the highest priority that matches the current handler. */
+    for (LightBackend& backend : backends) {
+        if (handler == backend.handler && isLit(backend.state)) {
+            handler(backend.state);
+            return Status::SUCCESS;
+        }
     }
 
-    handler(newState);
+    /* If no type has been lit up, then turn off the hardware. */
+    handler(state);
 
     return Status::SUCCESS;
 }
