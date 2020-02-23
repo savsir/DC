@@ -357,10 +357,40 @@ vendor/lib64/libwvhidl.so
 vendor/lib64/mediadrm/libwvdrmengine.so
 
 # Display-Hardware
+vendor/bin/hw/vendor.qti.hardware.display.allocator-service
+vendor/etc/init/vendor.qti.hardware.display.allocator-service.rc
+vendor/lib/hw/android.hardware.graphics.mapper@2.0-impl-qti-display.so
+vendor/lib/hw/gralloc.msmnile.so
+vendor/lib/libgralloccore.so
+vendor/lib/libgrallocutils.so
+vendor/lib/libqdMetaData.so
+vendor/lib/vendor.qti.hardware.display.mapper@2.0.so
+vendor/lib/vendor.qti.hardware.display.mapperextensions@1.0.so
+vendor/lib/vendor.qti.hardware.display.mapperextensions@1.1.so
+vendor/lib64/hw/android.hardware.graphics.mapper@2.0-impl-qti-display.so
+vendor/lib64/hw/gralloc.msmnile.so
+vendor/lib64/hw/hwcomposer.msmnile.so
+vendor/lib64/hw/memtrack.msmnile.so
+vendor/lib64/libdisplaydebug.so
 vendor/lib64/libdisplayqos.so
 vendor/lib64/libdpps.so
+vendor/lib64/libdrm.so
+vendor/lib64/libdrmutils.so
+vendor/lib64/libgpu_tonemapper.so
+vendor/lib64/libgralloccore.so
+vendor/lib64/libgrallocutils.so
+vendor/lib64/libqdMetaData.so
+vendor/lib64/libqdutils.so
+vendor/lib64/libqservice.so
 vendor/lib64/libsdm-colormgr-algo.so
+vendor/lib64/libsdmcore.so
 vendor/lib64/libsdmextension.so
+vendor/lib64/libsdmutils.so
+vendor/lib64/vendor.qti.hardware.display.allocator@1.0.so
+vendor/lib64/vendor.qti.hardware.display.mapper@1.0.so
+vendor/lib64/vendor.qti.hardware.display.mapper@2.0.so
+vendor/lib64/vendor.qti.hardware.display.mapperextensions@1.0.so
+vendor/lib64/vendor.qti.hardware.display.mapperextensions@1.1.so
 
 # Display-calibration
 vendor/etc/qdcm_calib_data_samsung_ea8076_fhd_cmd_dsi_panel.xml
@@ -642,6 +672,11 @@ vendor/lib64/libqmi_common_so.so
 vendor/lib64/libqmi_csi.so
 vendor/lib64/libqmi_encdec.so
 
+# Qdutils
+vendor/bin/hw/vendor.qti.hardware.qdutils_disp@1.0-service-qti
+vendor/etc/init/vendor.qti.hardware.qdutils_disp@1.0-service-qti.rc
+vendor/lib64/vendor.qti.hardware.qdutils_disp@1.0.so
+
 # Radio
 -product/app/QtiTelephonyService/QtiTelephonyService.apk
 product/etc/permissions/qcrilhook.xml
@@ -871,6 +906,14 @@ vendor/lib64/libhdcpsrm.so
 vendor/bin/cnss-daemon
 vendor/bin/nv_mac
 
+# Xiaomi
+vendor/bin/hw/vendor.xiaomi.hardware.displayfeature@1.0-service
+vendor/etc/init/vendor.xiaomi.hardware.displayfeature@1.0-service.rc
+vendor/lib64/hw/vendor.xiaomi.hardware.displayfeature@1.0-impl.so
+vendor/lib64/vendor.xiaomi.hardware.citsensorservice@1.0.so
+vendor/lib64/vendor.xiaomi.hardware.citsensorservice@1.1.so
+vendor/lib64/vendor.xiaomi.hardware.displayfeature@1.0.so
+
 # Misc
 -vendor/app/pasrservice/pasrservice.apk
 vendor/bin/adpl
@@ -920,6 +963,7 @@ vendor/lib/libsndmonitor.so
 vendor/lib/libspkrprot.so
 vendor/lib/libqsap_sdk.so
 vendor/lib/vendor.qti.hardware.audiohalext@1.0.so
+vendor/lib64/hw/displayfeature.default.so
 vendor/lib64/hw/vendor.qti.hardware.btconfigstore@1.0-impl.so
 vendor/lib64/hw/vendor.qti.hardware.capabilityconfigstore@1.0-impl.so
 vendor/lib64/libalAILDC.so
