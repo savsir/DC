@@ -147,14 +147,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.3-service \
     android.hardware.memtrack@1.0-impl \
-    android.hardware.memtrack@1.0-service \
-	android.hardware.graphics.mapper@2.0-impl-qti-display \
-	vendor.qti.hardware.display.allocator-service
+    android.hardware.memtrack@1.0-service
 
 PRODUCT_PACKAGES += \
-    gralloc.msmnile \
-    hwcomposer.msmnile \
-    memtrack.msmnile
+    vendor.display.config@1.10.vendor
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml
