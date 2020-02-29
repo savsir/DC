@@ -22,6 +22,8 @@
 <resources>
 
 	<!-- Color of the FOD view -->
-    <color name="config_fodColor">#00ff00</color>
+    <color name="config_fodColor">#0000ff00</color>
 	
+	<!-- Whether to use fingerprint pressed image -->
+    <bool name="config_fodPressedImage">true</bool>
 </resources>
