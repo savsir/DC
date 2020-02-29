@@ -22,5 +22,7 @@
 <resources>
     <!-- Doze: does this device support STATE_DOZE?  -->
     <bool name="doze_display_state_supported">true</bool>
+	<!-- Whether SystemUI ignores notch -->
+    <bool name="hide_view_behind_notch">true</bool>
 </resources>
 
