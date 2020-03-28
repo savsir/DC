@@ -655,6 +655,12 @@ vendor/lib64/libqti-perfd-client.so
 vendor/lib64/libqti-perfd.so
 vendor/lib64/libqti-util.so
 vendor/lib64/vendor.qti.hardware.perf@2.0.so
+vendor/lib64/libqti-utils.so
+vendor/lib64/libmeters-ns.so
+vendor/lib64/libgameoptfeature.so
+vendor/lib64/libadaptlaunch.so
+vendor/lib/libqti-utils.so
+vendor/lib/libperfconfig.so
 
 # Peripheral
 vendor/bin/pm-proxy
