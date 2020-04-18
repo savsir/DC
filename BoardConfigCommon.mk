@@ -160,7 +160,7 @@ BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(COMMON_PATH)/sepolicy/public
 BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
 
 # Vendor init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_cepheus
+TARGET_INIT_VENDOR_LIB := libinit_cepheus
 TARGET_RECOVERY_DEVICE_MODULES := libinit_cepheus
 
 # Verified Boot
