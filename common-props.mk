@@ -262,6 +262,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.ssr.restart_level=ALL_ENABLE
 
+# RIL
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.data.iwlan=1
+    persist.data.iwlan.ipsec.ap=1
+    persist.sys.cust.lte_config=true
+    persist.radio.VT_ENABLE=1
+    persist.radio.volte.dan_support=true
+
 # SurfaceFlinger
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.enable_gl_backpressure=1 \
