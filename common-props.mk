@@ -273,3 +273,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # WiFi
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0
+
+#Vulcan render
+debug.hwui.renderer=skiavk
