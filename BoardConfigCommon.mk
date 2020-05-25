@@ -101,6 +101,9 @@ TARGET_USES_HWC2 := true
 # Keystore
 TARGET_PROVIDES_KEYMASTER := true
 
+# FOD
+TARGET_SURFACEFLINGER_FOD_LIB := //$(COMMON_PATH):libfod_extension.xiaomi_sm8150
+
 # HIDL
 DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(COMMON_PATH)/compatibility_matrix.xml
