@@ -20,8 +20,7 @@ $(call inherit-product-if-exists, vendor/xiaomi/sm8150-common/sm8150-common-vend
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    $(LOCAL_PATH) \
-    hardware/xiaomi
+    $(LOCAL_PATH)
 
 # Hardware
 PRODUCT_COPY_FILES += \
