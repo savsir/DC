@@ -40,9 +40,10 @@
 #define FOD_STATUS_OFF 0
 
 #define FOD_SENSOR_X 455
-#define FOD_SENSOR_Y 1920
+#define FOD_SENSOR_Y 1931
 #define FOD_SENSOR_SIZE 173
 
+#define BRIGHTNESS_PATH "/sys/class/backlight/panel0-backlight/brightness"
 #define FOD_UI_PATH "/sys/devices/platform/soc/soc:qcom,dsi-display-primary/fod_ui"
 
 namespace {
@@ -147,6 +148,7 @@ Return<void> FingerprintInscreen::onPress() {
 
 Return<void> FingerprintInscreen::onRelease() {
     set(FOD_HBM_PATH, FOD_HBM_OFF);
+    xiaomiFingerprintService->extCmd(COMMAND_NIT, PARAM_NIT_NONE);
     return Void();
 }
 
@@ -176,8 +178,19 @@ Return<void> FingerprintInscreen::setLongPressEnabled(bool) {
     return Void();
 }
 
-Return<int32_t> FingerprintInscreen::getDimAmount(int32_t /* brightness */) {
-    return 0;
+Return<int32_t> FingerprintInscreen::getDimAmount(int32_t brightness) {
+    int realBrightness = get(BRIGHTNESS_PATH, 0);
+    float alpha;
+
+    if (realBrightness > 500) {
+        alpha = 1.0 - pow(realBrightness / 2047.0 * 430.0 / 600.0, 0.455);
+    } else {
+        alpha = 1.0 - pow(realBrightness / 1680.0, 0.455);
+    }
+
+    (void) brightness;
+
+    return 255 * alpha;
 }
 
 Return<bool> FingerprintInscreen::shouldBoostBrightness() {

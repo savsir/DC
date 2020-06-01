@@ -133,6 +133,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.data.iwlan.enable=true \
     persist.vendor.data.mode=concurrent
 
+#Disable NightLight when FOD is enabled
+PRODUCT_PROPERTY_OVERRIDES +=\
+    persist.fod.night_mode_disabled=true
+
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.df.color.temp=0 \
