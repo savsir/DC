@@ -27,7 +27,6 @@
 
 import /vendor/etc/init/hw/init.qcom.usb.rc
 import /vendor/etc/init/hw/init.target.rc
-import /vendor/etc/init/hw/init.safailnet.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -100,9 +99,6 @@ on boot
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
 
-    chown system system /dev/input/event4
-    chown 0666 /dev/input/event4
- 
     chown system system /sys/kernel/boot_slpi/ssr
 
     # This location is used by QCRIL to host UNIX domain
@@ -140,16 +136,6 @@ on boot
     # Sensors log dir
     mkdir /data/vendor/sensors 0770 system system
 
-	# FPS Info
-    chown system graphics /sys/devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/sde-crtc-0/measured_fps
-    chmod 0666 /sys/devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/sde-crtc-0/measured_fps
-	
-	# Access permission for smart charging
-    chown system system /sys/class/power_supply/battery/charging_enabled
-    chmod 0666 /sys/class/power_supply/battery/charging_enabled
-    chown system system /sys/class/power_supply/battery/input_suspend
-    chmod 0666 /sys/class/power_supply/battery/input_suspend
-	
 on post-fs-data
     # Create directory used by display clients
     mkdir /data/vendor/display 0770 system graphics
@@ -270,8 +256,7 @@ service vendor.tftp_server /vendor/bin/tftp_server
 service vendor.sensors /vendor/bin/sscrpcd sensorspd
     class early_hal
     user system
-    group system wakelock
-    capabilities BLOCK_SUSPEND
+    group system
 
 service vendor.sensors.qti /vendor/bin/sensors.qti
     class core
@@ -344,7 +329,7 @@ service vendor.audio-hal-2-0 /vendor/bin/hw/android.hardware.audio@2.0-service
     user audioserver
     # media gid needed for /dev/fm (radio) and for /data/misc/media (tee)
     group audio camera drmrpc inet media mediadrm net_bt net_bt_admin net_bw_acct oem_2901 wakelock
-    capabilities BLOCK_SUSPEND SYS_NICE
+    capabilities BLOCK_SUSPEND
     ioprio rt 4
     writepid /dev/cpuset/foreground/tasks /dev/stune/foreground/tasks
     # audioflinger restarts itself when it loses connection with the hal

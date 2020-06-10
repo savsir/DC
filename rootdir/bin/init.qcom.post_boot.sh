@@ -43,12 +43,9 @@ function configure_memory_parameters() {
     # vmpressure_file_min threshold is always set slightly higher
     # than LMK minfree's last bin value for all targets. It is calculated as
     # vmpressure_file_min = (last bin - second last bin ) + last bin
-    #
-    # Set allocstall_threshold to 0 for all targets.
-    #
 
     # Set Zram disk size=1GB for >=2GB Non-Go targets.
-    echo 536870912 > /sys/block/zram0/disksize
+    echo 1073741824 > /sys/block/zram0/disksize
     mkswap /dev/block/zram0
     swapon /dev/block/zram0 -p 32758
 
@@ -82,12 +79,6 @@ function configure_memory_parameters() {
     # use Google default LMK series for all 64-bit targets >=2GB.
     echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
     echo 1 > /sys/module/lowmemorykiller/parameters/oom_reaper
-
-    # Set allocstall_threshold to 0 for all targets.
-    # Set swappiness to 100 for all targets
-    echo 0 > /sys/module/vmpressure/parameters/allocstall_threshold
-    echo 100 > /proc/sys/vm/swappiness
-
 }
 
 case "$target" in
@@ -126,24 +117,11 @@ case "$target" in
     echo 10 > /proc/sys/kernel/sched_group_downmigrate
     echo 1 > /proc/sys/kernel/sched_walt_rotate_big_tasks
 
-    # cpuset parameters
-    echo 0-1 > /dev/cpuset/background/cpus
-    echo 0-2 > /dev/cpuset/system-background/cpus
-    echo 0-3 > /dev/cpuset/restricted/cpus
-
-    # Setup final blkio
-    # value for group_idle is us
-    echo 1000 > /dev/blkio/blkio.weight
-    echo 200 > /dev/blkio/background/blkio.weight
-    echo 2000 > /dev/blkio/blkio.group_idle
-    echo 0 > /dev/blkio/background/blkio.group_idle
-
     # Configure governor settings for silver cluster
     echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
     echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
     echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
     echo 1209600 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
-    echo 576000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
     echo 1 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
 
     # Configure governor settings for gold cluster
@@ -161,8 +139,8 @@ case "$target" in
     echo 1 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/pl
 
     # Configure input boost settings
-    echo "0:1017600" > /sys/module/cpu_boost/parameters/input_boost_freq
-    echo 80 > /sys/module/cpu_boost/parameters/input_boost_ms
+    echo "0:1324800" > /sys/module/cpu_boost/parameters/input_boost_freq
+    echo 120 > /sys/module/cpu_boost/parameters/input_boost_ms
 
     # Disable wsf, beacause we are using efk.
     # wsf Range : 1..1000 So set to bare minimum value 1.
@@ -224,7 +202,7 @@ case "$target" in
         for memlat in $device/*cpu*-lat/devfreq/*cpu*-lat
         do
         echo "mem_latency" > $memlat/governor
-        echo 8 > $memlat/polling_interval
+        echo 10 > $memlat/polling_interval
         echo 400 > $memlat/mem_latency/ratio_ceil
         done
 
@@ -254,12 +232,9 @@ case "$target" in
         done
     done
 
-    # Setup readahead
-    find /sys/devices -name read_ahead_kb | while read node; do echo 128 > $node; done
-
     configure_memory_parameters
 
-    echo "18432,23040,27648,32256,85296,120640" > /sys/module/lowmemorykiller/parameters/minfree
+    echo "18432,23040,27648,38708,102356,144768" > /sys/module/lowmemorykiller/parameters/minfree
     ;;
 esac
 
