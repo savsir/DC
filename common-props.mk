@@ -276,3 +276,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 #Vulcan render
 debug.hwui.renderer=skiavk
+
+# Zygote preforking
+persist.device_config.runtime_native.usap_pool_enabled=true
