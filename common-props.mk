@@ -100,7 +100,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac \
     persist.bluetooth.a2dp_offload.disabled=false \
     persist.bt.enableAptXHD=true \
-    ro.bluetooth.library_name=libbluetooth_qti.so
     persist.service.btui.use_aptx=1 \
     persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxtws-aptxhd-aptxadaptive-aac-ldac \
     persist.vendor.bt.aac_frm_ctl.enabled=false \
