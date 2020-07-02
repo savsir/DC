@@ -177,6 +177,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/msm_vidc_dec_sec     0660   system     audio
 /dev/msm_vidc_enc         0660   system     audio
 /dev/msm_rotator          0660   system     system
+/dev/hw_random            0600   root       root
 /dev/sdsprpc-smd          0660   system     system
 
 #permissions for audio
@@ -396,9 +397,3 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/graphics/fb0     modes                    0664    system  graphics
 /sys/class/graphics/fb0     mode                     0664    system  graphics
 /sys/class/graphics/fb0     msm_cmd_autorefresh_en   0664    system  graphics
-/sys/class/kgsl/kgsl-3d0    pwrscale                 0664    root  system
-/sys/class/kgsl/kgsl-3d0    devfreq/governor         0664    root  system
-/sys/class/kgsl/kgsl-3d0    force_rail_on            0664    root  system
-/sys/class/kgsl/kgsl-3d0    force_bus_on             0664    root  system
-/sys/class/kgsl/kgsl-3d0    force_clk_on             0664    root  system
-/sys/class/kgsl/kgsl-3d0    bus_split                0664    root  system
