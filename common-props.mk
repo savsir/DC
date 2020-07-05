@@ -243,6 +243,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ril.subscription.types=RUIM \
     ro.telephony.default_cdma_sub=0 \
     ro.telephony.default_network=22,22 \
+    persist.data.iwlan=1 \
+    persist.data.iwlan.ipsec.ap=1 \
+    persist.sys.cust.lte_config=true \
+    persist.radio.VT_ENABLE=1 \
+    persist.radio.volte.dan_support=true \
+    persist.rcs.supported=1 \
     telephony.lteOnCdmaDevice=1
 
 # Sensors
