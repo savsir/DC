@@ -173,6 +173,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	vendor.gralloc.disable_ubwc=0 \
     ro.opengles.version=196610 \
     ro.hardware.egl=adreno \
+    ro.surface_flinger.has_HDR_display=true \
+    ro.surface_flinger.has_wide_color_display=true \
     ro.hardware.vulkan=adreno \
     vendor.gralloc.disable_ubwc=0
 
@@ -259,6 +261,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # SSR
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.ssr.restart_level=ALL_ENABLE
+
+# RIL
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.data.iwlan=1
+    persist.data.iwlan.ipsec.ap=1
+    persist.sys.cust.lte_config=true
+    persist.radio.VT_ENABLE=1
+    persist.radio.volte.dan_support=true
 
 # SurfaceFlinger
 PRODUCT_PROPERTY_OVERRIDES += \
