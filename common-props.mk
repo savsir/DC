@@ -151,7 +151,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.display.disable_inline_rotator=1 \
     vendor.display.disable_scaler=0 \
     vendor.display.disable_ui_3d_tonemap=1 \
-    vendor.display.enable_default_color_mode=1 \
+    vendor.display.enable_default_color_mode=0 \
     vendor.display.enable_null_display=0 \
     vendor.display.enable_optimize_refresh=1
 
